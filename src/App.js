@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [job, setJob] = useState({ title: '', location: '', salary: '' });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    axios.post('http://localhost:5556/job', job)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Title:</label>
+        <input type="text" value={job.title} onChange={e => setJob({ ...job, title: e.target.value })} />
+      </div>
+      <div>
+        <label>Location:</label>
+        <input type="text" value={job.location} onChange={e => setJob({ ...job, location: e.target.value })} />
+      </div>
+      <div>
+        <label>Salary:</label>
+        <input type="text" value={job.salary} onChange={e => setJob({ ...job, salary: e.target.value })} />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 
