@@ -24,5 +24,5 @@ app.get("/", async (req, res) => {
   const job = await prisma.job.findMany();
   res.json(job);
 });
-
+app.listen(Port)
 
